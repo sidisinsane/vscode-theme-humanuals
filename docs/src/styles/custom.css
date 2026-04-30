@@ -1,0 +1,20 @@
+/* docs/src/styles/custom.css */
+:root {
+  --sl-color-accent-low: #4a1f0f;
+  --sl-color-accent: #d97757;
+  --sl-color-accent-high: #f5c4a8;
+}
+
+:root[data-theme="light"] {
+  --sl-color-accent-low: #f5c4a8;
+  --sl-color-accent: #c45f35;
+  --sl-color-accent-high: #4a1f0f;
+}
+
+.sl-link-button {
+    &.primary {
+        background-color: var(--sl-color-accent-low);
+        border: 1px solid var(--sl-color-accent);
+        color: var(--sl-color-accent-high);
+    }
+}

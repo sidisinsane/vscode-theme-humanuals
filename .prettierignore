@@ -1,0 +1,23 @@
+# .prettierignore
+# Ignore everything in the root
+/*
+
+# Whitelist specific folders
+!.github
+!.vscode
+!assets
+!docs
+!scripts
+!src
+
+# Whitelist specific files
+!*.json
+!*.mjs
+!*.md
+!LICENSE
+
+# Blacklist specific files in whitelisted folders
+*-lock.json
+CHANGELOG.md
+docs/src/content/docs/api
+docs/node_modules

@@ -1,0 +1,39 @@
+# CI workflow — runs on every push to main and on every pull request
+# targeting main, including automated Dependabot PRs.
+#
+# Validates that the codebase lints cleanly and compiles without errors.
+# The full build (theme generation, icon conversion, screenshots) is
+# intentionally left to the release workflow.
+
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Compile TypeScript
+        run: npm run compile:ts

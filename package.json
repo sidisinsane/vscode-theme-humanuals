@@ -1,0 +1,254 @@
+{
+    "name": "humanuals-theme",
+    "displayName": "Humanuals Theme",
+    "version": "0.1.0",
+    "description": "A VS Code theme for dark and light variants rooted in Anthropic's design palette",
+    "categories": [
+        "Themes"
+    ],
+    "keywords": [
+        "theme"
+    ],
+    "homepage": "https://github.com/sidisinsane/vscode-theme-humanuals",
+    "bugs": {
+        "url": "https://github.com/sidisinsane/vscode-theme-humanuals/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sidisinsane/vscode-theme-humanuals.git"
+    },
+    "license": "MIT",
+    "author": "Dirk Sidney Jansen (https://github.com/sidisinsane)",
+    "publisher": "sidisinsane",
+    "main": "dist/indexClient.js",
+    "browser": "dist/indexWeb.js",
+    "scripts": {
+        "browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. .",
+        "checkout:themes": "git checkout -- themes",
+        "clean": "rimraf dist *.vsix",
+        "precompile": "npm run convert:icon && npm run stitch:previews",
+        "compile": "npm run clean && npm run compile:ts && npm run compile:themes",
+        "compile:themes": "node dist/hooks/generateThemes.js",
+        "compile:ts": "tsc",
+        "convert:icon": "node scripts/convert-icon.mjs",
+        "docs:build": "cd docs && npm run build",
+        "docs:serve": "cd docs && npm run dev",
+        "format": "prettier --write '**/*.{json,md}'",
+        "lint": "eslint .",
+        "lint:fix": "eslint --fix .",
+        "package": "npm run package:themes && npm run checkout:themes",
+        "package:themes": "npm run convert:icon && vsce package",
+        "pkgjson:sort": "sort-package-json",
+        "prepare": "husky",
+        "stitch:previews": "node scripts/stitch-previews.mjs",
+        "vscode:prepublish": "npm run compile"
+    },
+    "contributes": {
+        "configuration": {
+            "title": "Humanuals Theme",
+            "properties": {
+                "humanualsTheme.darkTemperature": {
+                    "type": "string",
+                    "default": "neutral",
+                    "description": "Color temperature of the neutral scale in dark mode. `cool` shifts toward blue-grey, `neutral` is the Anthropic warm-brown baseline, `warm` pushes further into amber/ochre.",
+                    "enum": [
+                        "cool",
+                        "neutral",
+                        "warm"
+                    ]
+                },
+                "humanualsTheme.darkContrast": {
+                    "type": "string",
+                    "default": "balanced",
+                    "description": "Contrast level in dark mode. Controls surface separation and background-to-foreground distance.",
+                    "enum": [
+                        "soft",
+                        "balanced",
+                        "crisp"
+                    ]
+                },
+                "humanualsTheme.darkCursor": {
+                    "type": "string",
+                    "default": "white",
+                    "description": "Cursor color in dark mode.",
+                    "enum": [
+                        "white",
+                        "red",
+                        "orange",
+                        "yellow",
+                        "green",
+                        "aqua",
+                        "blue",
+                        "purple"
+                    ]
+                },
+                "humanualsTheme.darkSelection": {
+                    "type": "string",
+                    "default": "grey",
+                    "description": "Background color of selected text in dark mode.",
+                    "enum": [
+                        "grey",
+                        "red",
+                        "orange",
+                        "yellow",
+                        "green",
+                        "aqua",
+                        "blue",
+                        "purple"
+                    ]
+                },
+                "humanualsTheme.lightTemperature": {
+                    "type": "string",
+                    "default": "neutral",
+                    "description": "Color temperature of the neutral scale in light mode. `cool` shifts toward blue-grey, `neutral` is the Anthropic warm-brown baseline, `warm` pushes further into amber/ochre.",
+                    "enum": [
+                        "cool",
+                        "neutral",
+                        "warm"
+                    ]
+                },
+                "humanualsTheme.lightContrast": {
+                    "type": "string",
+                    "default": "balanced",
+                    "description": "Contrast level in light mode. Controls surface separation and background-to-foreground distance.",
+                    "enum": [
+                        "soft",
+                        "balanced",
+                        "crisp"
+                    ]
+                },
+                "humanualsTheme.lightCursor": {
+                    "type": "string",
+                    "default": "black",
+                    "description": "Cursor color in light mode.",
+                    "enum": [
+                        "black",
+                        "red",
+                        "orange",
+                        "yellow",
+                        "green",
+                        "aqua",
+                        "blue",
+                        "purple"
+                    ]
+                },
+                "humanualsTheme.lightSelection": {
+                    "type": "string",
+                    "default": "grey",
+                    "description": "Background color of selected text in light mode.",
+                    "enum": [
+                        "grey",
+                        "red",
+                        "orange",
+                        "yellow",
+                        "green",
+                        "aqua",
+                        "blue",
+                        "purple"
+                    ]
+                },
+                "humanualsTheme.italicKeywords": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Italicize keywords or not."
+                },
+                "humanualsTheme.italicComments": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Italicize comments or not."
+                },
+                "humanualsTheme.diagnosticTextBackgroundOpacity": {
+                    "type": "string",
+                    "default": "0%",
+                    "markdownDescription": "The opacity of the background color of [diagnostic text](https://code.visualstudio.com/updates/v1_52#_error-background-colors).",
+                    "enum": [
+                        "0%",
+                        "12.5%",
+                        "25%",
+                        "37.5%",
+                        "50%"
+                    ]
+                }
+            }
+        },
+        "configurationDefaults": {
+            "workbench.colorTheme": "Humanuals Dark Theme",
+            "workbench.preferredDarkColorTheme": "Humanuals Dark Theme",
+            "workbench.preferredLightColorTheme": "Humanuals Light Theme"
+        },
+        "themes": [
+            {
+                "label": "Humanuals Dark Theme",
+                "uiTheme": "vs-dark",
+                "path": "./themes/humanuals-dark-theme.json"
+            },
+            {
+                "label": "Humanuals Light Theme",
+                "uiTheme": "vs",
+                "path": "./themes/humanuals-light-theme.json"
+            }
+        ]
+    },
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "lint-staged": {
+        "*.ts": "eslint --fix",
+        "*.{json,md}": "prettier --write",
+        "package.json": "sort-package-json"
+    },
+    "devDependencies": {
+        "@eslint/eslintrc": "^3.3.5",
+        "@eslint/js": "^10.0.1",
+        "@types/node": "25.6.0",
+        "@types/vscode": "^1.116.0",
+        "@typescript-eslint/eslint-plugin": "8.59.0",
+        "@typescript-eslint/parser": "8.59.0",
+        "@vscode/test-web": "0.0.80",
+        "@vscode/vsce": "^3.9.1",
+        "eslint": "10.2.1",
+        "eslint-config-prettier": "10.1.8",
+        "eslint-plugin-perfectionist": "^5.9.0",
+        "eslint-plugin-prettier": "5.5.5",
+        "globals": "^17.5.0",
+        "husky": "9.1.7",
+        "lint-staged": "16.4.0",
+        "prettier": "3.8.3",
+        "prettier-plugin-jsdoc": "1.8.0",
+        "rimraf": "6.1.3",
+        "screenshot-desktop": "^1.15.4",
+        "sharp": "^0.34.5",
+        "sort-package-json": "^3.6.1",
+        "typescript": "6.0.3",
+        "typescript-eslint": "^8.59.0",
+        "vscode": "^1.1.37"
+    },
+    "engines": {
+        "vscode": "^1.116.0"
+    },
+    "icon": "icon.png",
+    "galleryBanner": {
+        "color": "#2f383e",
+        "theme": "dark"
+    },
+    "capabilities": {
+        "untrustedWorkspaces": {
+            "supported": true
+        },
+        "virtualWorkspaces": true
+    },
+    "extensionKind": [
+        "ui",
+        "workspace"
+    ],
+    "screenshots": [
+        {
+            "path": "assets/images/comparison-dark-neutral.png",
+            "label": "Humanuals Dark Neutral Theme"
+        },
+        {
+            "path": "assets/images/comparison-light-neutral.png",
+            "label": "Humanuals Light Neutral Theme"
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+# .vscodeignore
+# ATTENTION! Behaviour differs from .gitignore.
+# Ignore everything
+**
+
+# Whitelist specific root files
+!package.json
+!CHANGELOG.md
+!README.md
+!LICENSE
+!icon.png
+
+# Whitelist theme json files
+!themes/*.json
+
+# Whitelist compiled extension entrypoints and dependencies
+!dist/*.js
+!dist/syntax/*.js
+!dist/workbench/*.js
+
+# Whitelist screenshots listed in package.json `screenshots`
+!assets/images/comparison-dark-neutral.png
+!assets/images/comparison-light-neutral.png

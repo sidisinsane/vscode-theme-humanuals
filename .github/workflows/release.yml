@@ -1,0 +1,60 @@
+# Release workflow — triggers on version tag push (v*).
+#
+# Builds the extension, packages it as a .vsix artefact, attaches it to
+# a GitHub release, then publishes to both the VS Code Marketplace and
+# the Open VSX Registry.
+#
+# Required GitHub secrets:
+#   VSCE_PAT — Personal Access Token for the VS Code Marketplace (Azure DevOps)
+#              Expires every 3 months — rotate before it does.
+#   OVSX_PAT — Personal Access Token for the Open VSX Registry
+#
+# Triggered by: npm version [major|minor|patch] via scripts/release.sh
+
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile
+        run: npm run compile
+
+      - name: Package
+        run: npx vsce package
+        id: package
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: "*.vsix"
+          body: |
+            See [CHANGELOG.md](https://github.com/sidisinsane/vscode-theme-humanuals/blob/main/CHANGELOG.md) for details.
+
+      - name: Publish to VS Code Marketplace
+        run: npx vsce publish --packagePath *.vsix
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Publish to Open VSX Registry
+        run: npx ovsx publish *.vsix
+        env:
+          OVSX_TOKEN: ${{ secrets.OVSX_PAT }}
