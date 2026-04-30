@@ -28,6 +28,12 @@ import sharp from "sharp";
 export async function stitchImages(inputs, output, gap = 0) {
   if (!inputs || inputs.length === 0) return;
 
+  const missing = inputs.filter((input) => !existsSync(input));
+  if (missing.length > 0) {
+    console.warn(`⚠️ Skipping ${output} — missing input(s): ${missing.join(", ")}`);
+    return;
+  }
+
   try {
     const metadata = await sharp(inputs[0]).metadata();
     const { width, height } = metadata;

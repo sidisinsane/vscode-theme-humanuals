@@ -51,6 +51,7 @@ export class Utils {
     lightPath: string,
     data: Record<string, ThemeData>
   ) {
+    fs.mkdirSync(join(darkPath, ".."), { recursive: true });
     await this.writeFile(darkPath, data.dark);
     await this.writeFile(lightPath, data.light);
   }
