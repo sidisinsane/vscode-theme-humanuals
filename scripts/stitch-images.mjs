@@ -8,6 +8,7 @@
  *
  * Requires: sharp
  */
+import { existsSync } from "fs";
 import sharp from "sharp";
 
 /**
